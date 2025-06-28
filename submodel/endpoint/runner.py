@@ -67,7 +67,7 @@ class SubModelClient:
             RuntimeError: If the response returns a 401 Unauthorized status.
             requests.HTTPError: If the response contains an unsuccessful status code.
         """
-        url = f"{self.endpoint_url_base}/{endpoint}"
+        url = f"{self.endpoint_url_base}/sl/{endpoint}"
         response = self.sm_session.request(
             method, url, headers=self.headers, json=data, timeout=timeout
         )

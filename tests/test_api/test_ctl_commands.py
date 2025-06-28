@@ -13,7 +13,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests get_user
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {
                     "myself": {
@@ -29,7 +29,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests update_user_settings
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {
                     "updateUserSettings": {"id": "USER_ID", "publicKey": "PUBLIC_KEY"}
@@ -44,7 +44,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests get_gpus
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {
                     "gpuTypes": [
@@ -66,7 +66,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests get_gpu_by_id
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {
                     "gpuTypes": [
@@ -97,7 +97,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests create_pod
         """
-        with patch("submodel.api.requests.post") as patch_request, patch(
+        with patch("submodel.api.http.requests.post") as patch_request, patch(
             "submodel.api.ctl_commands.get_gpu"
         ) as patch_get_gpu, patch("submodel.api.ctl_commands.get_user") as patch_get_user:
             patch_request.return_value.json.return_value = {
@@ -140,7 +140,7 @@ class TestCTL(unittest.TestCase):
         """
         Test stop_pod
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {"podStop": {"id": "POD_ID"}}
             }
@@ -153,7 +153,7 @@ class TestCTL(unittest.TestCase):
         """
         Test resume_pod
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {"podResume": {"id": "POD_ID"}}
             }
@@ -166,7 +166,7 @@ class TestCTL(unittest.TestCase):
         """
         Test terminate_pod
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {"podTerminate": {"id": "POD_ID"}}
             }
@@ -177,7 +177,7 @@ class TestCTL(unittest.TestCase):
         """
         Test raised_error
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "errors": [{"message": "Error Message"}]
             }
@@ -188,7 +188,7 @@ class TestCTL(unittest.TestCase):
             self.assertEqual(str(context.exception), "Error Message")
 
         # Test Unauthorized with status code 401
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.status_code = 401
 
             with self.assertRaises(Exception) as context:
@@ -203,7 +203,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests get_pods
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {
                     "myself": {
@@ -245,7 +245,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests get_pods
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {
                     "pod": {
@@ -282,7 +282,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests create_template
         """
-        with patch("submodel.api.requests.post") as patch_request, patch(
+        with patch("submodel.api.http.requests.post") as patch_request, patch(
             "submodel.api.ctl_commands.get_gpu"
         ) as patch_get_gpu:
             patch_request.return_value.json.return_value = {
@@ -301,7 +301,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests get_endpoints
         """
-        with patch("submodel.api.requests.post") as patch_request:
+        with patch("submodel.api.http.requests.post") as patch_request:
             patch_request.return_value.json.return_value = {
                 "data": {
                     "myself": {
@@ -328,7 +328,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests create_endpoint
         """
-        with patch("submodel.api.requests.post") as patch_request, patch(
+        with patch("submodel.api.http.requests.post") as patch_request, patch(
             "submodel.api.ctl_commands.get_gpu"
         ) as patch_get_gpu:
             patch_request.return_value.json.return_value = {
@@ -347,7 +347,7 @@ class TestCTL(unittest.TestCase):
         """
         Tests update_endpoint_template
         """
-        with patch("submodel.api.requests.post") as patch_request, patch(
+        with patch("submodel.api.http.requests.post") as patch_request, patch(
             "submodel.api.ctl_commands.get_gpu"
         ) as patch_get_gpu:
             patch_request.return_value.json.return_value = {

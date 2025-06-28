@@ -35,7 +35,7 @@ class TestSubModelClient(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             submodel.api_key = "MOCK_API_KEY"
             client = SubModelClient()
-            client.post("ENDPOINT_ID/run", {"input": {}})
+            client.post("sl/ENDPOINT_ID/run", {"input": {}})
 
     @patch.object(requests.Session, "request")
     def test_post(self, mock_post):
@@ -49,7 +49,7 @@ class TestSubModelClient(unittest.TestCase):
 
         submodel.api_key = "MOCK_API_KEY"
         client = SubModelClient()
-        response = client.post("ENDPOINT_ID/run", {"input": {}})
+        response = client.post("sl/ENDPOINT_ID/run", {"input": {}})
 
         self.assertEqual(response, {"id": "123"})
 
@@ -65,7 +65,7 @@ class TestSubModelClient(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             submodel.api_key = "MOCK_API_KEY"
             client = SubModelClient()
-            client.get("ENDPOINT_ID/status/123")
+            client.get("sl/ENDPOINT_ID/status/123")
 
     @patch.object(requests.Session, "request")
     def test_get(self, mock_get):
@@ -79,7 +79,7 @@ class TestSubModelClient(unittest.TestCase):
 
         submodel.api_key = "MOCK_API_KEY"
         client = SubModelClient()
-        response = client.get("ENDPOINT_ID/status/123")
+        response = client.get("sl/ENDPOINT_ID/status/123")
 
         self.assertEqual(response, {"status": "COMPLETED"})
 
@@ -107,7 +107,7 @@ class TestEndpoint(unittest.TestCase):
         # Tests
         mock_client_request.assert_called_once_with(
             "POST",
-            f"{self.ENDPOINT_ID}/run",
+            f"sl/{self.ENDPOINT_ID}/run",
             {"input": {"YOUR_MODEL_INPUT_JSON": "YOUR_MODEL_INPUT_VALUE"}},
             10,
         )
@@ -117,7 +117,7 @@ class TestEndpoint(unittest.TestCase):
         self.assertEqual(run_request.status(), "IN_PROGRESS")
 
         mock_client_request.assert_called_with(
-            "GET", f"{self.ENDPOINT_ID}/status/123", timeout=10
+            "GET", f"sl/{self.ENDPOINT_ID}/status/123", timeout=10
         )
 
     @patch("submodel.endpoint.runner.SubModelClient._request")

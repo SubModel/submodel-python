@@ -6,7 +6,7 @@ SubModel | API Wrapper | CTL Commands
 
 from typing import Optional
 
-from .api import run_api_query
+from .http import run_api_query
 from .mutations import container_register_auth as container_register_auth_mutations
 from .mutations import endpoints as endpoint_mutations
 from .mutations import pods as pod_mutations
