@@ -3,7 +3,7 @@
 
 def generate_container_registry_auth(name: str, username: str, password: str):
     """
-    Generate a GraphQL mutation string to save container registry authentication details.
+    Generate a API mutation string to save container registry authentication details.
 
     Args:
         name (str): The name of the container registry.
@@ -11,12 +11,12 @@ def generate_container_registry_auth(name: str, username: str, password: str):
         password (str): The password for authentication.
 
     Returns:
-        str: The GraphQL mutation string.
+        str: The API mutation string.
     """
     # Prepare the input dictionary
     input_dict = {"name": name, "username": username, "password": password}
 
-    # Convert the input dictionary to a string, properly formatted for GraphQL
+    # Convert the input dictionary to a string, properly formatted for API
     input_str = ", ".join(f'{key}: "{value}"' for key, value in input_dict.items())
 
     return f"""
@@ -31,7 +31,7 @@ def generate_container_registry_auth(name: str, username: str, password: str):
 
 def update_container_registry_auth(registry_auth_id: str, username: str, password: str):
     """
-    Generate a GraphQL mutation string to update registry authentication details.
+    Generate a API mutation string to update registry authentication details.
 
     Args:
         registry_auth_id (str): The id of the container registry authentication
@@ -39,12 +39,12 @@ def update_container_registry_auth(registry_auth_id: str, username: str, passwor
         password (str): The password for authentication.
 
     Returns:
-        str: The GraphQL mutation string.
+        str: The API mutation string.
     """
     # Prepare the input dictionary
     input_dict = {"id": registry_auth_id, "username": username, "password": password}
 
-    # Convert the input dictionary to a string, properly formatted for GraphQL
+    # Convert the input dictionary to a string, properly formatted for API
     input_str = ", ".join(f'{key}: "{value}"' for key, value in input_dict.items())
 
     return f"""
@@ -59,13 +59,13 @@ def update_container_registry_auth(registry_auth_id: str, username: str, passwor
 
 def delete_container_registry_auth(registry_auth_id: str):
     """
-    Generate a GraphQL mutation string to delete registry authentication details.
+    Generate a API mutation string to delete registry authentication details.
 
     Args:
         registry_auth_id (str): The id of the container registry authentication
 
     Returns:
-        str: The GraphQL mutation string.
+        str: The API mutation string.
     """
 
     return f"""

@@ -61,7 +61,7 @@ def generate_pod_deployment_mutation(
         instance_id: Instance ID for CPU pods
 
     Returns:
-        str: GraphQL mutation string
+        str: API mutation string
     """
     input_fields = []
 

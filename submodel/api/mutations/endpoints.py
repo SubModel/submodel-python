@@ -18,7 +18,7 @@ def generate_endpoint_mutation(
     allowed_cuda_versions: str = None,
     gpu_count: int = None,
 ):
-    """Generate a string for a GraphQL mutation to create a new endpoint."""
+    """Generate a string for a API mutation to create a new endpoint."""
     input_fields = []
 
     # ------------------------------ Required Fields ----------------------------- #
@@ -82,7 +82,7 @@ def generate_endpoint_mutation(
 
 
 def update_endpoint_template_mutation(endpoint_id: str, template_id: str):
-    """Generate a string for a GraphQL mutation to update an existing endpoint's template."""
+    """Generate a string for a API mutation to update an existing endpoint's template."""
     input_fields = []
 
     # ------------------------------ Required Fields ----------------------------- #

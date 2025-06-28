@@ -1,5 +1,5 @@
 """
-SubModel | API Wrapper | GraphQL
+SubModel | API Wrapper | API
 """
 
 import json
@@ -11,16 +11,13 @@ import requests
 from submodel import error
 from submodel.user_agent import USER_AGENT
 
-HTTP_STATUS_UNAUTHORIZED = 401
-
-
-def run_graphql_query(query: str) -> Dict[str, Any]:
+def run_api_query(query: str) -> Dict[str, Any]:
     """
-    Run a GraphQL query
+    Run a API query
     """
     from submodel import api_key  # pylint: disable=import-outside-toplevel, cyclic-import
 
-    api_url_base = os.environ.get("SUBMODEL_API_BASE_URL", "https://api.submodel.ai")
+    api_url_base = os.environ.get("SUBMODEL_API_BASE_URL", "https://api.submodel.ai/api/v1/")
     url = f"{api_url_base}/graphql"
 
     headers = {
@@ -32,12 +29,14 @@ def run_graphql_query(query: str) -> Dict[str, Any]:
     data = json.dumps({"query": query})
     response = requests.post(url, headers=headers, data=data, timeout=30)
 
-    if response.status_code == HTTP_STATUS_UNAUTHORIZED:
+    ret = response.json();
+    
+    if ret.code==50008 or ret.code==50014:
         raise error.AuthenticationError(
             "Unauthorized request, please check your API key."
         )
 
-    if "errors" in response.json():
-        raise error.QueryError(response.json()["errors"][0]["message"], query)
+    if ret.code>0 and ret.code!=20000:
+        raise error.QueryError(ret.code + ":" + ret.message, query)
 
     return response.json()

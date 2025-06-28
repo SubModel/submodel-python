@@ -15,7 +15,7 @@ class TestGenerateContainerRegistryAuth(unittest.TestCase):
     def test_generate_container_registry_auth(self):
         """
         Test that the generate_container_registry_auth function produces the correct
-        GraphQL mutation string with the provided name, username, and password.
+        API mutation string with the provided name, username, and password.
         """
         # Define test inputs
         name = "testRegistry"
@@ -39,7 +39,7 @@ class TestGenerateContainerRegistryAuth(unittest.TestCase):
     def test_update_container_registry_auth(self):
         """
         Test that the update_container_registry_auth function produces the correct
-        GraphQL mutation string with the provided registry_auth_id, username and password.
+        API mutation string with the provided registry_auth_id, username and password.
         """
         # Define test inputs
         registry_auth_id = "testAuthId"
@@ -63,7 +63,7 @@ class TestGenerateContainerRegistryAuth(unittest.TestCase):
     def test_delete_container_registry_auth(self):
         """
         Test that the delete_container_registry_auth function produces the correct
-        GraphQL mutation string with the provided registry_auth_id
+        API mutation string with the provided registry_auth_id
         """
         # Define test inputs
         registry_auth_id = "testAuthId"

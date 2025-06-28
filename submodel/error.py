@@ -30,7 +30,7 @@ class AuthenticationError(SubModelError):
 
 class QueryError(SubModelError):
     """
-    Raised when a GraphQL query fails
+    Raised when a API query fails
     """
 
     def __init__(self, message: Optional[str] = None, query: Optional[str] = None):

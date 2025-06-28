@@ -24,7 +24,7 @@ Welcome to the official Python library for submodel API &amp; SDK.
 - [⚡ | Serverless Worker (SDK)](#--serverless-worker-sdk)
   - [Quick Start](#quick-start)
   - [Local Test Worker](#local-test-worker)
-- [📚 | API Language Library (GraphQL Wrapper)](#--api-language-library-graphql-wrapper)
+- [📚 | API Language Library (API Wrapper)](#--api-language-library-wrapper)
   - [Endpoints](#endpoints)
   - [GPU Cloud (Pods)](#gpu-cloud-pods)
 - [📁 | Directory](#--directory)
@@ -85,7 +85,7 @@ You can also test your worker locally before deploying it to submodel. This is u
 python my_worker.py --sm_serve_api
 ```
 
-## 📚 | API Language Library (GraphQL Wrapper)
+## 📚 | API Language Library (API Wrapper)
 
 When interacting with the submodel API you can use this library to make requests to the API.
 
@@ -160,7 +160,7 @@ submodel.terminate_pod(pod.id)
 ├── docs               # Documentation
 ├── examples           # Examples
 ├── submodel             # Package source code
-│   ├── api_wrapper    # Language library - API (GraphQL)
+│   ├── api_wrapper    # Language library - API
 │   ├── cli            # Command Line Interface Functions
 │   ├── endpoint       # Language library - Endpoints
 │   └── serverless     # SDK - Serverless Worker

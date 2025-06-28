@@ -15,7 +15,7 @@ def generate_pod_template(
     is_serverless: bool = False,
     registry_auth_id: str = None,
 ):
-    """Generate a string for a GraphQL mutation to create a new pod template."""
+    """Generate a string for a API mutation to create a new pod template."""
     input_fields = [f'name: "{name}"', f'imageName: "{image_name}"']
 
     # ------------------------------ Optional Fields ----------------------------- #

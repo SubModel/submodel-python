@@ -1,5 +1,5 @@
 """'
-GraphQL wrapper for the SubModel API
+Wrapper for the SubModel API
 """
 
 import time

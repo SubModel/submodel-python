@@ -6,7 +6,7 @@ SubModel | API Wrapper | CTL Commands
 
 from typing import Optional
 
-from .graphql import run_graphql_query
+from .api import run_api_query
 from .mutations import container_register_auth as container_register_auth_mutations
 from .mutations import endpoints as endpoint_mutations
 from .mutations import pods as pod_mutations
@@ -22,7 +22,7 @@ def get_user() -> dict:
     """
     Get the current user
     """
-    raw_response = run_graphql_query(user_queries.QUERY_USER)
+    raw_response = run_api_query(user_queries.QUERY_USER)
     cleaned_return = raw_response["data"]["myself"]
     return cleaned_return
 
@@ -33,7 +33,7 @@ def update_user_settings(pubkey: str) -> dict:
 
     :param pubkey: the public key of the user
     """
-    raw_response = run_graphql_query(user_mutations.generate_user_mutation(pubkey))
+    raw_response = run_api_query(user_mutations.generate_user_mutation(pubkey))
     cleaned_return = raw_response["data"]["updateUserSettings"]
     return cleaned_return
 
@@ -42,7 +42,7 @@ def get_gpus() -> dict:
     """
     Get all GPU types
     """
-    raw_response = run_graphql_query(gpus.QUERY_GPU_TYPES)
+    raw_response = run_api_query(gpus.QUERY_GPU_TYPES)
     cleaned_return = raw_response["data"]["gpuTypes"]
     return cleaned_return
 
@@ -54,7 +54,7 @@ def get_gpu(gpu_id: str, gpu_quantity: int = 1):
     :param gpu_id: the id of the gpu
     :param gpu_quantity: how many of the gpu should be returned
     """
-    raw_response = run_graphql_query(gpus.generate_gpu_query(gpu_id, gpu_quantity))
+    raw_response = run_api_query(gpus.generate_gpu_query(gpu_id, gpu_quantity))
 
     cleaned_return = raw_response["data"]["gpuTypes"]
 
@@ -71,7 +71,7 @@ def get_pods() -> dict:
     """
     Get all pods
     """
-    raw_return = run_graphql_query(pod_queries.QUERY_POD)
+    raw_return = run_api_query(pod_queries.QUERY_POD)
     cleaned_return = raw_return["data"]["myself"]["pods"]
     return cleaned_return
 
@@ -82,7 +82,7 @@ def get_pod(pod_id: str):
 
     :param pod_id: the id of the pod
     """
-    raw_response = run_graphql_query(pod_queries.generate_pod_query(pod_id))
+    raw_response = run_api_query(pod_queries.generate_pod_query(pod_id))
     return raw_response["data"]["pod"]
 
 
@@ -156,7 +156,7 @@ def create_pod(
     if container_disk_in_gb is None and template_id is None:
         container_disk_in_gb = 10
 
-    raw_response = run_graphql_query(
+    raw_response = run_api_query(
         pod_mutations.generate_pod_deployment_mutation(
             name,
             image_name,
@@ -204,7 +204,7 @@ def stop_pod(pod_id: str):
     >>> pod_id = submodel.create_pod("test", "submodel/stack", "NVIDIA GeForce RTX 3070")
     >>> submodel.stop_pod(pod_id)
     """
-    raw_response = run_graphql_query(pod_mutations.generate_pod_stop_mutation(pod_id))
+    raw_response = run_api_query(pod_mutations.generate_pod_stop_mutation(pod_id))
 
     cleaned_response = raw_response["data"]["podStop"]
     return cleaned_response
@@ -223,7 +223,7 @@ def resume_pod(pod_id: str, gpu_count: int):
     >>> submodel.stop_pod(pod_id)
     >>> submodel.resume_pod(pod_id)
     """
-    raw_response = run_graphql_query(
+    raw_response = run_api_query(
         pod_mutations.generate_pod_resume_mutation(pod_id, gpu_count)
     )
 
@@ -242,7 +242,7 @@ def terminate_pod(pod_id: str):
     >>> pod_id = submodel.create_pod("test", "submodel/stack", "NVIDIA GeForce RTX 3070")
     >>> submodel.terminate_pod(pod_id)
     """
-    run_graphql_query(pod_mutations.generate_pod_terminate_mutation(pod_id))
+    run_api_query(pod_mutations.generate_pod_terminate_mutation(pod_id))
 
 
 def create_template(
@@ -277,7 +277,7 @@ def create_template(
 
     >>> template_id = submodel.create_template("test", "submodel/stack", "python3 main.py")
     """
-    raw_response = run_graphql_query(
+    raw_response = run_api_query(
         template_mutations.generate_pod_template(
             name=name,
             image_name=image_name,
@@ -299,7 +299,7 @@ def get_endpoints() -> dict:
     """
     Get all endpoints
     """
-    raw_return = run_graphql_query(endpoint_queries.QUERY_ENDPOINT)
+    raw_return = run_api_query(endpoint_queries.QUERY_ENDPOINT)
     cleaned_return = raw_return["data"]["myself"]["endpoints"]
     return cleaned_return
 
@@ -339,7 +339,7 @@ def create_endpoint(
 
     >>> endpoint_id = submodel.create_endpoint("test", "template_id")
     """
-    raw_response = run_graphql_query(
+    raw_response = run_api_query(
         endpoint_mutations.generate_endpoint_mutation(
             name,
             template_id,
@@ -371,7 +371,7 @@ def update_endpoint_template(endpoint_id: str, template_id: str):
 
     >>> endpoint_id = submodel.update_endpoint_template("test", "template_id")
     """
-    raw_response = run_graphql_query(
+    raw_response = run_api_query(
         endpoint_mutations.update_endpoint_template_mutation(endpoint_id, template_id)
     )
 
@@ -390,7 +390,7 @@ def create_container_registry_auth(name: str, username: str, password: str):
     Returns:
         dict: The response data containing the saved container registry authentication.
     """
-    raw_response = run_graphql_query(
+    raw_response = run_api_query(
         container_register_auth_mutations.generate_container_registry_auth(
             name, username, password
         )
@@ -410,7 +410,7 @@ def update_container_registry_auth(registry_auth_id: str, username: str, passwor
     Returns:
         dict: The response data containing the updated container registry authentication.
     """
-    raw_response = run_graphql_query(
+    raw_response = run_api_query(
         container_register_auth_mutations.update_container_registry_auth(
             registry_auth_id, username, password
         )
@@ -425,7 +425,7 @@ def delete_container_registry_auth(registry_auth_id: str):
     Args:
         registry_auth_id (str): The id of the container registry authentication
     """
-    raw_response = run_graphql_query(
+    raw_response = run_api_query(
         container_register_auth_mutations.delete_container_registry_auth(
             registry_auth_id
         )
